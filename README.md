@@ -19,7 +19,17 @@ So far, their test cases follow a predictable methodology :
 
 ## Other notes
 
+* the python `in` operator is a list loop and could contribute an O(N) all on it's own
+    * `foo in bar` is fine
+    * `foo in bar.keys()` impacts your time complexity
 * you're pretty safe to assume they won't test, mark you down for, failing to guard against the explicit assumptions described. So if it says N is 0..1000, they won't feed in an N=1001 just to see if you protected against it.
 * the "Open reading material", currently at the top of each lesson, is worth reading before attempting the exercises as they are short and focus exactly on what you'll need to solve the following puzzles
 * during the actual interview testing/exam, the report sent to the candidate is much more sparesly detailed than the one sent to the company?!
-* if you use the IDE provided in the browser to actually build your solution - your every edit and run is recorded and presented to the client
+* if you use the browser to actually build your solution - every edit and run is recorded and presented to the client
+* again: there seems to be a lack of specificity in every puzzle around what is the correct response to error conditions; look, read, look again, as
+   after seeing the solution that apparent lack always seems like a debateably reasonable assumption implied by the specs.
+   
+   * For example "MissingInteger" (Lesson 4) does not specify the correct response if the input sequence is [-1,-2,-3]:
+   there are no positive integers so what is the correct response? The 'minimal positive integer' is 1.
+   * Similarly, it does not explicitly state that if the input set is _full_ (no integers are missing) then return 
+   the largest value—plus one.  Again, seems perfectly reasonable in hindsight, but a source of uncertainty in the moment

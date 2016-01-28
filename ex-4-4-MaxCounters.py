@@ -4,6 +4,14 @@ MaxCounters
 Calculate the values of counters after applying all alternating operations: increase counter by 1; set value of all
 counters to current maximum
 
+*********
+This one was tricksy.  The straight-forward solution, even though quite fast and elegant, involves updating all the
+counters every time you get an update-all instruction.  This is the difference between a 60% score and a 100% score.
+
+To avoid this hit you have to track the low and high water marks and refer to them as you update individual counters.
+Then, before sending back the results, add a pass over the counters to ensure they are all up to the low-water mark.
+*********
+
 You are given N counters, initially set to 0, and you have two possible operations on them:
 
     * increase(X) - counter X is increased by 1
@@ -70,15 +78,6 @@ Complexity:
         input arguments).
 
 Elements of input arrays can be modified.
-
-
----
-
-This one was tricksy.  The straight-forward solution, even though quite fast and elegant, involves updating all the
-counters every time you get an update-all instruction.  This is the difference between a 60% score and a 100% score.
-
-To avoid this hit you have to track the low and high water marks and refer to them as you update individual counters.
-Then, before sending back the results, add a pass over the counters to ensure they are all up to the low-water mark.
 """
 
 import unittest

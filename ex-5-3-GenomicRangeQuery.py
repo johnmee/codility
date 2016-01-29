@@ -3,7 +3,11 @@ GenomicRangeQuery
 
 Find the minimal nucleotide from a range of sequence DNA
 
+## Problem Description
+
 https://codility.com/programmers/task/genomic_range_query/
+
+## My Analysis
 
 If you're not fussy, this is a straightforward problem: you go through every query and pull out the sliced sequence and
   inspect it.  A quick sort to identify the least impact nucleo and you're done. Right?  See 'slow_solution' below.

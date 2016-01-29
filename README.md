@@ -37,7 +37,12 @@ So far, their test cases follow a predictable methodology :
     * Similarly, it does not explicitly state that if the input set is _full_ (no integers are missing) then return 
    the largest value—plus one.  Again, seems perfectly reasonable in hindsight, but a source of uncertainty in the moment
 * before submitting your solution, there is no feedback regarding it's efficiency; but it does affect your score and report
-* if it tells you the solution is O(1) you know to go looking for a formulaic solution; O(n) has no loops inside loops, etc.
-* the python `in` operator is a list loop and could contribute an O(N) all on it's own
-    * `foo in bar` is fine
-    * `foo in bar.keys()` impacts your time complexity
+* Understanding the O factors reveals the nature of the optimal solution:
+   * O(1) there is a formulaic solution 
+   * O(n) the solution has no nested loops and all happens in a single pass
+   * O(n+m) the solution has no nested loops, and passes over n and m only once
+   * O(n+n) the solution has no nested loops, but you can pass over the sequence twice
+   * O(n*n) the solution has a loop through n nested inside a loop through N
+* the python `in` operator is a list loop and could contribute an O(N) all on it's own. ie:
+    * `foo in bar` is ok if bar is a dictionary, but a potential problem if bar is a list
+    * `foo in bar.keys()` is a nested loop (sequentially visiting every item in the list of keys)

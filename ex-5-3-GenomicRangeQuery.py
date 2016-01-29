@@ -5,25 +5,23 @@ Find the minimal nucleotide from a range of sequence DNA
 
 https://codility.com/programmers/task/genomic_range_query/
 
-This is a fairly straightforward problem: you can go through every query and pull out the sliced sequence, then
-  inspect the sequence for the minimal-factor.  Taking advantage of the fact the minimal factor values correspond to
-  alphabetical order, sorting the slice into alphabetical order puts the minimum factor magically at the front
-  of the string. Map it to the value and you're done. Yes?  See 'slow_solution' below.
+If you're not fussy, this is a straightforward problem: you go through every query and pull out the sliced sequence and
+  inspect it.  A quick sort to identify the least impact nucleo and you're done. Right?  See 'slow_solution' below.
 
 No. Not done.
 
 The straightforward solution visits every nucleotide in every slice. If the slices overlap a lot, then
-  the solution revisits the same nucleotide multiple times.  If you could arrange the solution to
-  only visit each nucleotide once, then it would be substantially faster.
+  the solution revisits the same nucleotide a lot.  If you could arrange the solution to
+  only visit each nucleotide once, then it would be much faster.
 
 But how?
 
-We need to pass over the sequence and produce an intermediatory data structure which compiles the data we
-need so we can access it directly; that is, without stepping through any part of the sequence again.
+We need to pass over the sequence and produce an intermediatory data structure which aggregates the data we
+need into a directly accessible form; namely, without stepping through any part of the sequence again.
 
 Enter the "prefix sum" pattern.
 
-In this problem, we create an array for each type of item then, at each step through the sequence, record
+For this problem, we create an array for each type of item, then at each step through the sequence, record
  the count of how many of each type we've seen.  When we're done, for the example sequence
  "CAGCCTA", we finish up with:
 
@@ -32,12 +30,17 @@ In this problem, we create an array for each type of item then, at each step thr
     sumG = [0,0,0,1,1,1,1,1]
     sumT = [0,0,0,0,0,0,1,1]
 
-Now when we can ask "Are there any 'C' types between points 2 and 4?" we can lookup sumC for the answer:
-  At point 2 we had seen "1" type C nucleo, and at point 4 we'd seen 2. Thus, we can establish that
-  there is exactly 1 (2-1).
+Now it's plain as day where each nucleo of each type appears.  So, when we can ask "Are there any
+ 'C' types between points 2 and 4?" we can lookup sumC for the answer:
+  At point 2 we had seen 1 type C nucleo, and at point 4 we'd seen 2.  We determine
+  there is exactly 1 (2-1) type C nucleo between points 2 and 4 only by looking at the two end-points,
+  saving us from having to inspect every point between them.
 
-So with this approach we can go through all the queries plugging in the start and end indexes and comparing
-the results.  This will tell us which nucleotides appear in each query and thence determine the 'minimum impact'.
+So now we don't need the original sequence. Instead we can look at the sum for each endpoint
+ and comparing the values.  Thus we can quickly identify which nucleotides appear in each query
+ and determine the 'minimum impact' value within each.
+
+See 'fast_solution'.
 """
 import unittest
 import random
@@ -88,8 +91,10 @@ def fast_solution(S, P, Q):
     # Eg: The sum for "C" in "CAGCCTA" are [0,1,1,1,2,3,3,3]
     sumA = [0]; sumC = [0]; sumG = [0]; sumT = [0]
     for nuke in S:
+        # copy the counts in the last cell into this one
         for sum in (sumA, sumC, sumG, sumT):
             sum.append(sum[-1])
+        # increment the sum corresponding to the current nuke
         if nuke == 'A':
             sumA[-1] += 1
         elif nuke == 'C':

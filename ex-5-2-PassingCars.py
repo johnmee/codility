@@ -3,15 +3,16 @@ Passing Cars
 Count the number of passing cars on the road.
 
 
-********
-I found this problem discription very difficult to appreciate:
-NB: The cars travelling east only pass the cars travelling west which appear after it in the series!!
+
+***
+Note:
+
+    The cars travelling east only pass cars travelling west if they appear after it in the series.
 
 The only indication of this feature is the example.  And even when I started to suspect it, there is
 no second example with which to establish whether this observation is a feature or a coincidence.
 
-* you can avoid reversing the list (strict prefix sum style) by inverting the problem to a count of cars
-travelling east that pass cars travelling west.
+* you can invert the problem to a count of cars travelling east that pass cars travelling west no problem.
 ********
 
 A non-empty zero-indexed array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.

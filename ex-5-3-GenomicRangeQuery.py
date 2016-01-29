@@ -11,6 +11,7 @@ https://codility.com/programmers/task/genomic_range_query/
 
 If you're not fussy, this is a straightforward problem: you go through every query and pull out the sliced sequence and
   inspect it.  A quick sort to identify the least impact nucleo and you're done. Right?  See 'slow_solution' below.
+  It scores about 65/100.
 
 No. Not done.
 
@@ -44,7 +45,7 @@ So now we don't need the original sequence. Instead we can look at the sum for e
  and comparing the values.  Thus we can quickly identify which nucleotides appear in each query
  and determine the 'minimum impact' value within each.
 
-See 'fast_solution'.
+See 'fast_solution'. Scores 100/100.
 """
 import unittest
 import random

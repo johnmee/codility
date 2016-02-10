@@ -17,54 +17,53 @@ You're looking for the smallest average of a series of numbers.  At first it loo
  But, at some point, you'll realize that a small number will always pull the average down,
  no matter what numbers are around it.
 
-Thus, given that it, takes a minimum of two numbers to make an average, you're really only looking for that pair
+Thus, since it takes at least two numbers to make an average, you may be only looking for a pair
  of numbers which combine to provide the smallest total.
- To verify this pressumption, consider the slope that the curve of graphing the moving average
- of the pair would make. Irrespective of the size of the average, the gradient will always tilt
+ To verify this pressumption, consider the slope that graphing the moving average
+ of the pair would make. Irrespective of the width of the average, the gradient will always tilt
  down, however slightly, when you come across a small number.
 
-Coding a two-point average is dead simple: just walk through the sequence from left to right adding each pair
+So coding a two-point average is dead simple: just walk through the sequence from left to right adding each pair
  together and tracking the position of the smallest pair.
 
-I couldn't believe it would be this easy, but couldn't resist, and gave it a run... 50%.
+I couldn't believe it would be this easy, but couldn't resist, and gave it a run... just 50%.
 
-After a run the report tells you which tests it failed and I couldn't help but notice it failed
- for 3 point moving averages.  That was perplexing because I couldn't see how to create a three
- point average that would change the results over a two point average!  So I googled it.
+After a run, the report tells you which tests failed and I couldn't help but glimpse it failed
+ all the tests that had something about the number 3 in them.  That was perplexing because I
+ was actually having trouble dreaming up a 3-point average which the 2-point didn't detect.
+ So I googled it.
 
-The explanation is sequences with an odd number of integers... namely 3.
+The explanation is that sequences have an odd, or even, number of integers. So take 3-points:
  For example: [-8, -6, -10]
  In this sequence the two-point averages are -7 and -8, so the answer would be index point 1 (the -6).
- But note that the three poit average is also -8, and commences one point earlier, on index point 0.
- So the correct answer is 0.
+ But note that the three point average is also -8, and commences one point earlier, on index point 0.
+ So the correct answer is actually 0.
 
-And we're back questioning whether this scenario will play out for sequences of length 4, 5, 6 and beyond.
- Will it?
+So we're back questioning whether issue will replay for sequences of length 4, 5, 6 and beyond? Will it?
 
-Well, consider a sequence of 4 values. [1,2,2,1]. It has three two-point averages. [1,2],[2,2],[2,1].
- Which evaluate to [1.5, 2, 1.5].  The four-point average is 1.5.
- How about [1,-1, 1,-1]?  The two-points averages are [0,0,0] and the four-point average is[0].
- You can play this out all day, only to find that a four-point average can never be less than one
- of the two-point averages within it.
+Ok, let's consider a sequence of 4 values. [1,2,2,1]. It has three two-point averages. [1,2],[2,2],[2,1].
+ Which evaluate to [1.5, 2, 1.5], offering 0 as the answer.  Meanwhile the four-point average is also 1.5. Hmm.
+ How about [1,-1, 1,-1]?  The two-point averages are [0,0,0] and the four-point average is also [0].
+ You can play this out all day, only to find that the four, six, eight etc point averages will never be
+ less than one of the two-point averages within it.
 
-Ok, then why do we need the three point average?
+Ok, so if two is enough, why do we need the three point average?
  Consider [1, -1, 1, -1]? The two-point averages all come to 0.  And we've already established that
  a four-point average (of 0) can never best the two-point averages.
  But the three-point averages are 0.33 and -0.33.
  So the correct answer is index point 1.
 
-And a 5-point sequence?
- Ok, [-1, 1, -1, 1, -1].
+And a 5-point sequence? Ok, take [-1, 1, -1, 1, -1]:
  Two points = [0, 0, 0, 0] (best answer is 0)
  Three points = [-0.33, 0.33, -0.33] (better answer is 1)
  Four points = [0, 0] (just like the two points)
  Five points = [-0.33] (same as three points answer).
 
-By this point my understanding is that the two and three-point averages act like a factorial of all the
+Basically the two and three-point averages act like the factors/subcomponents of all the
 longer length averages.  They may be able to match one or other, but will never beat them.
 
-Thus we can confidently write some trivial code to do a single pass solution which considers just
- the two and three-point averages.
+Thus we can confidently write some trivial code to do a single pass solution which considers only
+ the two and three-point averages, but has all averages of longer length sequences covered.
 
 -------------------
 # Problem Description

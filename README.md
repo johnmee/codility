@@ -42,7 +42,7 @@ So far, their test cases follow a predictable methodology :
    * O(n) the solution has no nested loops and all happens in a single pass
    * O(n+m) the solution has no nested loops, and passes over n and m only once
    * O(n+n) the solution has no nested loops, but you can pass over the sequence twice
-   * O(n*n) the solution has a loop through n nested inside a loop through N
+   * O(n*n) the solution has a loop through n nested inside a loop through n
 * the python `in` operator is a list loop and could contribute an O(N) all on it's own. ie:
     * `foo in bar` is ok if bar is a dictionary, but a potential problem if bar is a list
     * `foo in bar.keys()` is a nested loop (sequentially visiting every item in the list of keys)

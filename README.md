@@ -46,3 +46,9 @@ So far, their test cases follow a predictable methodology :
 * the python `in` operator is a list loop and could contribute an O(N) all on it's own. ie:
     * `foo in bar` is ok if bar is a dictionary, but a potential problem if bar is a list
     * `foo in bar.keys()` is a nested loop (sequentially visiting every item in the list of keys)
+* coming up with reasonable test cases, and determining the correct answers, is half the puzzle! Passing the example
+   is not enough. Every puzzle is subjected to 'simple' tests, not unlike the one provided, and 'medium' tests-
+   which involve arrays of significant length, to be sure you pass these tests you need to work out some way
+   to generate a sizeable test sequence but still know the correct answer. Then there are the 'maximal' tests which
+   seek to max-out the size and complexity so, to be certain of 100%, you need to devise tests-and the correct
+    answers-for that too.

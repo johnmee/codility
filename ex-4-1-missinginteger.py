@@ -132,7 +132,7 @@ class TestExercise(unittest.TestCase):
     def test_monster_positive(self):
         arr = [random.randint(*ELEMENT_RANGE) for _ in xrange(1, N_RANGE[1])]
         random.shuffle(arr)
-        print solution(arr), arr
+        print (solution(arr), arr)
 
 
 if __name__ == '__main__':

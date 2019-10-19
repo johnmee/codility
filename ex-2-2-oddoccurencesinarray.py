@@ -55,7 +55,7 @@ def gen_array(L, odd):
 
 class TestOddOccurencesInArray(unittest.TestCase):
     def test_sample_generation(self):
-        print gen_array(5, 1)
+        print (gen_array(5, 1))
 
     def test_example1(self):
         arr = [9, 3, 9, 3, 9, 7, 9]

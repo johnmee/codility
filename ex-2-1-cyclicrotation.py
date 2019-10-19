@@ -47,8 +47,8 @@ class TestCyclicRotation(unittest.TestCase):
         N = random.randint(*INT_RANGE)
         K = random.randint(*INT_RANGE)
         A = [random.randint(*ARRAY_RANGE) for i in xrange(0, N)]
-        print N, K, A
-        print solution(A, K)
+        print (N, K, A)
+        print (solution(A, K))
 
 if __name__ == '__main__':
     unittest.main()

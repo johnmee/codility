@@ -31,7 +31,7 @@ class TestExercise(unittest.TestCase):
         missing =  random.randint(0, len(arr))
         arr.remove(missing)
         self.assertEqual(solution(arr), missing)
-        print missing, arr
+        print (missing, arr)
 
     def test_maximum(self):
         arr = [n for n in xrange(1, INT_RANGE[1]+1)]

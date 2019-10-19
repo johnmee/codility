@@ -44,11 +44,11 @@ class TestExercise(unittest.TestCase):
     def test_random(self):
         N = random.randint(*N_RANGE)
         arr = [random.randint(*ELEMENT_RANGE) for _ in xrange(N)]
-        print N, solution(arr), arr
+        print (N, solution(arr), arr)
 
     def test_maximum(self):
         arr = [random.randint(*ELEMENT_RANGE) for _ in range(100000)]
-        print 100000, solution(arr), arr
+        print (100000, solution(arr), arr)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 # Codility Solutions
 
-Solutions to the exercises and tests at http://codility.com/
+Python solutions to the training exercises and tests at http://codility.com/
 
 https://codility.com/programmers/lessons/
 
@@ -22,7 +22,7 @@ So far, their test cases follow a predictable methodology :
 * not always, as the problem dictates, some medium sized test cases eg: ~100 - ~5000 length arrays
 * always some 'extreme' test cases typically involving generating maximal random datasets
 
-## Other notes
+## Notes
 
 * you're safe to assume they won't test, mark you down for, failing to guard against the explicit assumptions described. So if it says N is 0..1000, they won't feed in an N=1001 just to see if you protected against it.
 * the "Open reading material", currently at the top of each lesson, is worth reading before attempting the exercises as they are short and focus exactly on what you'll need to solve the following puzzles
@@ -52,3 +52,5 @@ So far, their test cases follow a predictable methodology :
    to generate a sizeable test sequence but still know the correct answer. Then there are the 'maximal' tests which
    seek to max-out the size and complexity so, to be certain of 100%, you need to devise tests-and the correct
     answers-for that too.
+
+* Codility is still running python 3.6.5 (2018) but I couldn't (be bothered) overcoming issues with installing that on a 2022 version of linux, so any updated tests were run on Python 3.7.13.

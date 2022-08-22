@@ -73,7 +73,7 @@ def solution(X, A):
             # add the numbered leaf to the set of leaves.
             leaves.add(leaf)
             # Stop when the set has enough leaves.
-            if len(leaves) >= X:    # if the len function is too slow, replace it with a counter.
+            if len(leaves) >= X:
                 return count
     return -1
 

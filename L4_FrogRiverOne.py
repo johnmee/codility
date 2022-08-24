@@ -63,16 +63,18 @@ def solution(X, A):
     :param X: [int] The frog's destination.
     :param A: [int] A sequence of leaf arrivals at these positions.
     :returns: [int]  The earliest time the frog can get to position x, or -1 if never.
+
+    * Create a set to put all the collected leaves into.
+    * Start collecting leaves and, if needed to get to our destination, put
+        it into the set.  Python sets are made to prevent duplicates, so that
+        makes things easy.
+    * When we have enough leaves in the set to reach our destination we're done!
+        (We know they are all uniquely numbered because it is set).
     """
-    # The collected leaves go into a python 'set'; which ignores duplicates.
     leaves = set()
-    # For every leaf,
     for count, leaf in enumerate(A):
-        # if the leaf is at/before the destination,
-        if leaf <= X:
-            # add the numbered leaf to the set of leaves.
+        if leaf <= X:   # Only collect the leaves we need to get to X.
             leaves.add(leaf)
-            # Stop when the set has enough leaves.
             if len(leaves) >= X:
                 return count
     return -1

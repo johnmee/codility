@@ -1,47 +1,39 @@
 """
 # Missing Integer
-Find the minimal positive integer not occurring in the given sequence.
+Find the smallest positive integer that does not occur in a given sequence.
 
 Write a function:
 
     def solution(A)
 
-that, given a non-empty zero-indexed array A of N integers, returns the minimal positive integer (greater than 0)
-that does not occur in A.
+that, given an array A of N integers, returns the smallest positive integer
+(greater than 0) that does not occur in A.
 
-For example, given:
-  A[0] = 1
-  A[1] = 3
-  A[2] = 6
-  A[3] = 4
-  A[4] = 1
-  A[5] = 2
+For example, given A = [1, 3, 6, 4, 1, 2], the function should return 5.
 
-the function should return 5.
+Given A = [1, 2, 3], the function should return 4.
 
-Assume that:
-    * N is an integer within the range [1..100,000]
-    * each element of array A is an integer within the range [-2,147,483,648..2,147,483,647].
+Given A = [−1, −3], the function should return 1.
 
-Complexity:
-    * expected worst-case time complexity is O(N)
-    * expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input
-        arguments).
+Write an efficient algorithm for the following assumptions:
 
-Elements of input arrays can be modified.
+    N is an integer within the range [1..100,000];
+    each element of array A is an integer within the range [−1,000,000..1,000,000].
+
+Copyright 2009–2022 by Codility Limited. All Rights Reserved.
+Unauthorized copying, publication or disclosure prohibited.
 """
-
 import unittest
 import random
-
-N_RANGE = (1, 100000)
-ELEMENT_RANGE = (-2147483648, 2147483647)
 
 
 def solution(A):
     """
-    :param A: non-empty list of integers
-    :return: an integer - the smallest positive integer that is missing
+    :param A: list[int] A non-empty list of integers.
+    :return: [int] The smallest positive integer that is missing.
+
+    Sort the array and walk through it until we find the missing item.
+    I wonder if this is a mistake: allowing us to sort the array first?
     """
     missing = 1
     for elem in sorted(A):
@@ -52,40 +44,11 @@ def solution(A):
     return missing
 
 
-def alternate_solution(A):
-    """
-    A 'Pidgeon Hole' solution:
-
-    :param A: non-empty list of integers
-    :return: an integer - the smallest positive integer that is missing
-    """
-    # dictionary of booleans indicating which ints we've seen
-    roll = {}
-    largest = 0
-
-    # mark the roll
-    for element in A:
-        if element > 0:
-            roll[element] = True
-            # track the largest int
-            if element > largest:
-                largest = element
-
-    # find the first missing element
-    # NB: using `not in roll.keys()` contributes an O(N) loop which ruins time complexity on the codility platform
-    counter = 1
-    while counter <= largest:
-        if counter in roll:
-            counter += 1
-        else:
-            break
-
-    return counter
-
+N_RANGE = (1, 100000)
+ELEMENT_RANGE = (-2147483648, 2147483647)
 
 
 class TestExercise(unittest.TestCase):
-
     def test_example(self):
         self.assertEqual(solution([1, 3, 6, 4, 1, 2]), 5)
 
@@ -95,7 +58,7 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(solution([-1]), 1)
 
     def test_simple(self):
-        self.assertEqual(solution([2,3,4,6,10,1000]), 1)
+        self.assertEqual(solution([2, 3, 4, 6, 10, 1000]), 1)
         self.assertEqual(solution([-1, 0, 1, 2, 3, 4, 5, 6, 10, 1000]), 7)
         self.assertEqual(solution([1000, -1, 10, 3, -5, 2, 11, 59, 1]), 4)
 
@@ -103,12 +66,12 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(1, solution([ELEMENT_RANGE[0], ELEMENT_RANGE[1], -10]))
 
     def test_positive_only(self):
-        arr = range(1, 101) + range(102, 201)
+        arr = list(range(1, 101)) + list(range(102, 201))
         random.shuffle(arr)
         self.assertEqual(solution(arr), 101)
 
     def test_negative_only(self):
-        arr = range(-100, 0)
+        arr = list(range(-100, 0))
         random.shuffle(arr)
         self.assertEqual(solution(arr), 1)
 
@@ -120,7 +83,7 @@ class TestExercise(unittest.TestCase):
 
     def test_large_2(self):
         # create big array of ints
-        arr = range(1,100000)
+        arr = list(range(1, 100000))
         random.shuffle(arr)
         # remove one
         missing_idx = random.randint(1, len(arr))
@@ -130,10 +93,10 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(solution(arr), missing_int)
 
     def test_monster_positive(self):
-        arr = [random.randint(*ELEMENT_RANGE) for _ in xrange(1, N_RANGE[1])]
+        arr = [random.randint(*ELEMENT_RANGE) for _ in range(1, N_RANGE[1])]
         random.shuffle(arr)
-        print solution(arr), arr
+        print(solution(arr), arr)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

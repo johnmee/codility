@@ -5,76 +5,14 @@ Find the minimal average of any slice containing at least two elements.
 
 https://codility.com/programmers/task/min_avg_two_slice/
 
-
-----------------
-# My Analysis
-
-This problem doesn't even need prefix-sums, so that was a big red-herring. Well mostly.
- The 'trick' is not in the coding at all, but in a realisation about the nature of the problem...
-
-You're looking for the smallest average of a series of numbers.  At first it looks like you
- have to permutate over an ever increasing collection of averages of various lengths.
- But, at some point, you'll realize that a small number will always pull the average down,
- no matter what numbers are around it.
-
-Thus, since it takes at least two numbers to make an average, you may be only looking for a pair
- of numbers which combine to provide the smallest total.
- To verify this pressumption, consider the slope that graphing the moving average
- of the pair would make. Irrespective of the width of the average, the gradient will always tilt
- down, however slightly, when you come across a small number.
-
-So coding a two-point average is dead simple: just walk through the sequence from left to right adding each pair
- together and tracking the position of the smallest pair.
-
-I couldn't believe it would be this easy, but couldn't resist, and gave it a run... just 50%.
-
-After a run, the report tells you which tests failed and I couldn't help but glimpse it failed
- all the tests that had something about the number 3 in them.  That was perplexing because I
- was actually having trouble dreaming up a 3-point average which the 2-point didn't detect.
- So I googled it.
-
-The explanation is that sequences have an odd, or even, number of integers. So take 3-points:
- For example: [-8, -6, -10]
- In this sequence the two-point averages are -7 and -8, so the answer would be index point 1 (the -6).
- But note that the three point average is also -8, and commences one point earlier, on index point 0.
- So the correct answer is actually 0.
-
-So we're back questioning whether issue will replay for sequences of length 4, 5, 6 and beyond? Will it?
-
-Ok, let's consider a sequence of 4 values. [1,2,2,1]. It has three two-point averages. [1,2],[2,2],[2,1].
- Which evaluate to [1.5, 2, 1.5], offering 0 as the answer.  Meanwhile the four-point average is also 1.5. Hmm.
- How about [1,-1, 1,-1]?  The two-point averages are [0,0,0] and the four-point average is also [0].
- You can play this out all day, only to find that the four, six, eight etc point averages will never be
- less than one of the two-point averages within it.
-
-Ok, so if two is enough, why do we need the three point average?
- Consider [1, -1, 1, -1]? The two-point averages all come to 0.  And we've already established that
- a four-point average (of 0) can never best the two-point averages.
- But the three-point averages are 0.33 and -0.33.
- So the correct answer is index point 1.
-
-And a 5-point sequence? Ok, take [-1, 1, -1, 1, -1]:
- Two points = [0, 0, 0, 0] (best answer is 0)
- Three points = [-0.33, 0.33, -0.33] (better answer is 1)
- Four points = [0, 0] (just like the two points)
- Five points = [-0.33] (same as three points answer).
-
-Basically the two and three-point averages act like the factors/subcomponents of all the
-longer length averages.  They may be able to match one or other, but will never beat them.
-
-Thus we can confidently write some trivial code to do a single pass solution which considers only
- the two and three-point averages, but has all averages of longer length sequences covered.
-
--------------------
-# Problem Description
-
-A non-empty zero-indexed array A consisting of N integers is given. A pair of integers (P, Q),
-such that 0 <= P < Q < N, is called a slice of array A (notice that the slice contains at least
-two elements). The average of a slice (P, Q) is the sum of A[P] + A[P + 1] + ... + A[Q] divided
-by the length of the slice. To be precise, the average equals (A[P] + A[P + 1] + ... + A[Q]) / (Q - P + 1).
+A non-empty array A consisting of N integers is given.
+A pair of integers (P, Q), such that 0 ≤ P < Q < N, is called a slice of array A
+(notice that the slice contains at least two elements).
+The average of a slice (P, Q) is the sum of A[P] + A[P + 1] + ... + A[Q] divided
+by the length of the slice.
+To be precise, the average equals (A[P] + A[P + 1] + ... + A[Q]) / (Q − P + 1).
 
 For example, array A such that:
-
     A[0] = 4
     A[1] = 2
     A[2] = 2
@@ -95,12 +33,12 @@ Write a function:
 
     def solution(A)
 
-that, given a non-empty zero-indexed array A consisting of N integers, returns the starting
-position of the slice with the minimal average. If there is more than one slice with a minimal
-average, you should return the smallest starting position of such a slice.
+that, given a non-empty array A consisting of N integers, returns the starting
+position of the slice with the minimal average. If there is more than one slice
+with a minimal average, you should return the smallest starting position of such
+a slice.
 
 For example, given array A such that:
-
     A[0] = 4
     A[1] = 2
     A[2] = 2
@@ -111,21 +49,41 @@ For example, given array A such that:
 
 the function should return 1, as explained above.
 
-Assume that:
+Write an efficient algorithm for the following assumptions:
 
         N is an integer within the range [2..100,000];
-        each element of array A is an integer within the range [-10,000..10,000].
+        each element of array A is an integer within the range [−10,000..10,000].
 
-Complexity:
+Copyright 2009–2022 by Codility Limited. All Rights Reserved.
+Unauthorized copying, publication or disclosure prohibited.
+----------------
 
-        expected worst-case time complexity is O(N);
-        expected worst-case space complexity is O(N), beyond input storage (not counting the
-          storage required for input arguments).
+# Discussion
 
-Elements of input arrays can be modified.
+The brute force solution is to determine the average of every slice of the
+sequence. That's a lot of sequences! Is there a better way?
+
+The solution doesn't even need prefix-sums.  The 'trick' is not in the coding at
+all, but in an appreciation in the nature of the problem.
+
+For this problem, the lowest average of two, or three, points can not be bested by
+a longer sequence of points.  We do not need to consider any longer sequences.
+
+To illustrate, consider [1, -1, 1, -1].
+The two-point averages all come to 0.
+The four-point average also comes to 0; it cannot best the two-point averages.
+The three-point averages are 0.33 and -0.33.
+So the correct answer is index point 1.
+
+If you extend that sequence with, say, 100, it changes nothing.
+If you extend that sequence with -100, then the answer becomes [-1, -100] (-50.5)
+which is the best pair.
+
+So we need to pass over the sequence once, calculating the two, and three, point
+averages and returning the best of those.  O(N)
+
+https://app.codility.com/demo/results/training6P83U6-V79/
 """
-
-
 import unittest
 import random
 
@@ -136,69 +94,69 @@ RANGE_N = (-10000, 10000)
 
 def solution(A):
     """
-    :param A: array of integers
-    :return: an integer
+    :param A: list[int] Sequence of positive, or negative, integers.
+    :return: [int] Index to the first element of the slice with the lowest average value.
     """
-    # the lowest average we've ever seen
-    lowest_avg = RANGE_N[1]
-    # the starting point of the lowest average seen
-    lowest_idx = 0
-    # the value we saw two iterations ago
-    second_last = None
-    # the value we saw last iteration
-    last = None
+    lowest_avg = RANGE_N[1]  # The lowest average value seen so far.
+    lowest_idx = 0  # The starting index of the lowest average seen so far.
 
-    # for every number in the sequence
-    for idx, this in enumerate(A):
+    two_previous = 10000  # The value of the item before the previous item.
+    previous = 10000  # The value of the previous item.
+    for idx, current in enumerate(A):
 
-        # if we have seen three numbers calculate the three-point average
-        # and, if necessary, keep it.
-        if second_last is not None:
-            three_avg = (second_last + last + this) / 3.0
-            if three_avg < lowest_avg:
-                lowest_avg = three_avg
-                lowest_idx = idx - 2
+        # The three-point average.
+        three_avg = (two_previous + previous + current) / 3.0
+        if three_avg < lowest_avg:
+            lowest_avg = three_avg
+            lowest_idx = idx - 2
 
-        # if we have seen two numbers calculate the two-point average
-        # and, if necessary, keep it.
-        if last is not None:
-            two_avg = (last + this) / 2.0
-            if two_avg < lowest_avg:
-                lowest_avg = two_avg
-                lowest_idx = idx - 1
+        # The two-point average.
+        two_avg = (previous + current) / 2.0
+        if two_avg < lowest_avg:
+            lowest_avg = two_avg
+            lowest_idx = idx - 1
 
-        # print idx, second_last, last, this, '\t\t', two_avg, three_avg, '\t\t', lowest_avg, lowest_idx
-
-        second_last = last
-        last = this
+        two_previous = previous
+        previous = current
 
     return lowest_idx
 
 
 class TestExercise(unittest.TestCase):
+    """
+    example: example test
+    double_quadruple: two or four elements
+    simple1: simple test, the best slice has length 3
+    simple2: simple test, the best slice has length 3
+    small_random: random, length = 100
+    medium_range: increasing, decreasing (legth = ~100) and small functional
+    medium_random: random, N = ~700
+    large_ones: numbers from -1 to 1, N = ~100,000
+    large_random: random, N = ~100,000
+    extreme_values: all maximal values, N = ~100,000
+    large_sequence: many seqeneces, N = ~100,000
+    """
+
     def test_example(self):
         self.assertEqual(solution([4, 2, 2, 5, 1, 5, 8]), 1)
         self.assertEqual(solution([5, 2, 2, 100, 1, 1, 100]), 4)
         self.assertEqual(solution([11, 2, 10, 1, 100, 2, 9, 2, 100]), 1)
 
     def test_three(self):
-        # self.assertEqual(solution([-3, -5, -8, -4, -10]), 2)
-        # self.assertEqual(solution([-8, -6, -10]), 0)
+        self.assertEqual(solution([-3, -5, -8, -4, -10]), 2)
+        self.assertEqual(solution([-8, -6, -10]), 0)
         self.assertEqual(solution([1, -1, 1, -1]), 1)
 
     def test_random(self):
-        A = [random.randint(*RANGE_N) for _ in xrange(2, 10)]
-        print A
-        print solution(A)
-
-    def test_large_ones(self):
-        """Numbers from -1 to 1, N = ~100000"""
-        # how to test?
+        A = [random.randint(*RANGE_N) for _ in range(2, 10)]
+        print(A)
+        print(solution(A))
 
     def test_extreme(self):
-        A = [RANGE_N[1]] * (RANGE_A[1] / 3) + [RANGE_N[0]] * (RANGE_A[1] / 3)
+        A = [RANGE_N[1]] * (RANGE_A[1] // 3) + [RANGE_N[0]] * (RANGE_A[1] // 3)
         idx = solution(A)
-        print idx, A[idx-3:idx+3]
+        print(idx, A[idx - 3 : idx + 3])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

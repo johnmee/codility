@@ -1,26 +1,11 @@
 """
-Number of Disc Intersections
+# Number of Disc Intersections
 
 Compute the number of intersections in a sequence of discs.
 
 https://codility.com/programmers/task/number_of_disc_intersections/
-----------------
-# My Commentary
 
-This was a cow, not because the slow solution is dead easy and fell out with ease, but because the fast solution
-was tantilizingly close to for so long I struggled to focus enough to finish it off.  For ages I though I had it
-and just tinkered about absent-mindedly expecting the right combination of ideas to just fall into my lap.  But
-It was super fiddly getting the placement and formulation of the line that counts the number of intersections
-exactly right:
-
-    `intersections += istart - iend - 1`
-
-You need to add the number of discs opened between the closing of this one and the last, fine, but don't try to increment
-by ones inside the while loop-that gets messy-and do snip one off the total increment amount (not the total total for eg).
-
--------------------
-# Problem Description
-
+## Problem Description
 
 We draw N discs on a plane. The discs are numbered from 0 to N - 1. A zero-indexed array A of N non-negative
 integers, specifying the radiuses of the discs, is given. The J-th disc is drawn with its center at (J, 0)
@@ -36,6 +21,8 @@ The figure below shows discs drawn for N = 6 and A as follows:
   A[3] = 1
   A[4] = 4
   A[5] = 0
+
+https://codility-frontend-prod.s3.amazonaws.com/media/task_static/number_of_disc_intersections/static/images/auto/0eed8918b13a735f4e396c9a87182a38.png
 
 There are eleven (unordered) pairs of discs that intersect, namely:
 
@@ -62,78 +49,111 @@ Complexity:
         expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
 
 Elements of input arrays can be modified.
+
+---
+In other words:
+With every value in the array,
+draw a circle with its center on the x-axis where the index lies,
+and a radius of its value.
+Count the number of intersections between all the circles.
+
+## Solution
+
+The brute-force solution visits every circle with every other circle.
+It is: O(N**2) 50% (100% correct, 12% performance)
+https://app.codility.com/demo/results/trainingYTV8B5-MTB/
+
+The "fast" solution  considers where the openings and closings occur, but
+abandons their individual pairings.  Thus, we have points on a line, which
+are either an "opening" or a "closing" of a circle.  Sort the two lists then
+step through all the "closing" points and count the number of "opening" points
+which have not yet been closed.
+Aside from the sort, O(log(N)), we can achieve the answer in single pass O(N).
+
+ * collect all the "openings" and "closings" into two lists.
+ * sort both lists
+ * for every closing
+    * for every opening between this closing and the last
+      * mark an intersection
+ * that's our answer
+
+It is: O(N*log(N)) 100%.
+https://app.codility.com/demo/results/trainingQKGBMA-DQ7/
 """
-
+import itertools
 import unittest
-import random
+
+MAX_INTERSECTIONS = 10000000  # Runaway breakpoint.
 
 
-RANGE_A = (0, 2147483647)
-RANGE_N = (0, 100000)
-MAX_INTERSECTIONS = 10000000
-
-
-def slow_solution(A):
-    """
-    Brute force - visit and test every combination - O(N**2)
-    56% (100% correct, 12% performance)
-    """
-    def intersect(ja, jb, ka, kb):
-        return ka <= jb or jb >= ka or (ka >= ja and kb <= jb)
-
-    print A
+def brute_solution(A):
+    """Brute force - visit and test every combination."""
+    # Create tuples of the x coordinates where each circle opens and closes.
     minmax = []
     for k, v in enumerate(A):
-        minmax.append([k-v, k+v])
+        minmax.append([k - v, k + v])
+
+    # Sort them by their opening coordinate.
     minmax.sort()
-    print minmax
 
-    import itertools
+    def intersect(ja, jb, ka, kb):
+        """True if J intersects with K."""
+        return ka <= jb or jb >= ka or (ka >= ja and kb <= jb)
 
+    # Count all the intersections of all the combinations of circles.
     count = 0
     for j, k in itertools.combinations(minmax, 2):
-        print j, k
         if intersect(*(j + k)):
             count += 1
     return count
 
 
 def fast_solution(A):
-    """
-    100% O(N*log(N))
-    Take advantage of the fact that, for accounting purposes, it isn't necessary to keep specific
-    opening and closing points together.  We only need to know how many discs are open when a disc
-    closes.  Thus we can step through all the closing points and simply count the
-    number of discs that have opened since the last close.
-    """
-    # create separate lists of all the start points and the end points, and sort them
-    starts, ends = [], []
+    """Intervals on a line solution."""
+    # Create lists of the opening and closing points; sort them.
+    openings, closings = [], []
     for point, radius in enumerate(A):
-        starts.append(point - radius)
-        ends.append(point + radius)
-    starts.sort()
-    ends.sort()
+        openings.append(point - radius)
+        closings.append(point + radius)
+    openings.sort()
+    closings.sort()
 
-    # every time a disc closes we add an intersection for every disc that has opened
-    # since the last close
-    intersections = istart = 0
-    for iend in xrange(len(ends)):                                          # for every closing
-        while istart < len(starts) and starts[istart] <= ends[iend]:        # step through unreconciled openings
-            istart += 1
-        intersections += istart - iend - 1                                  # and record them as intersections
-
-        # trap runaway monsters
-        if intersections > MAX_INTERSECTIONS:
+    # Every time a disc closes, add the discs that opened since the last close.
+    intersections = 0
+    iopen = 0
+    for iclose in range(len(closings)):  # As every disc closes,
+        while iopen < len(openings) and openings[iopen] <= closings[iclose]:
+            iopen += 1  # Count the discs that are open.
+        intersections += iopen - iclose - 1
+        if intersections > MAX_INTERSECTIONS:  # Capture runaway monsters.
             return -1
-
     return intersections
-
 
 
 solution = fast_solution
 
 
 class TestExercise(unittest.TestCase):
+    """
+    example1: example test
+    simple1
+    simple2
+    simple3
+    extreme_small: empty and [10]
+    small1
+    small2
+    small3
+    overflow: arithmetic overflow tests
+    medium1
+    medium2
+    medium3
+    medium4
+    10M_intersections: 10.000.000 intersections
+    big1
+    big2
+    big3: [0]*100.000
+    """
+
     def test_example(self):
         self.assertEqual(solution([1, 5, 2, 1, 4, 0]), 11)
 
@@ -150,5 +170,5 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(solution(A), -1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

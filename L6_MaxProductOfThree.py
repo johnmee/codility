@@ -78,11 +78,15 @@ def solution(A):
     :param A: list[int]
     :return: [int]
     """
-    A.sort()
-    return max(
-        A[0] * A[1] * A[-1],
-        A[-3] * A[-2] * A[-1]
-    )
+    max=0
+    
+    a=sorted(a)
+    a.reverse()
+
+    max=(a[0] * a[1] * a[2])
+    
+    return max
+    
 
 
 RANGE_A = (-1000, 1000)

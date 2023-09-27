@@ -88,7 +88,7 @@ class TestExercise(unittest.TestCase):
         # remove one
         missing_idx = random.randint(1, len(arr))
         missing_int = arr[missing_idx]
-        del arr[missing_idx]
+        # del arr[missing_idx]
         # run it
         self.assertEqual(solution(arr), missing_int)
 

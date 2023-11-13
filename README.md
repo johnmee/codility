@@ -67,3 +67,15 @@ The test cases follow a predictable methodology :
       in the array—plus one'.
       * Whilst not explicitly stated, the answer is specified but implicitly–so be prepared for some uncertainty with
       some outputs; don't let it undermine your time and confidence in the moment.
+
+How to do this:
+
+Read the puzzle over and over.
+Focus on the inputs and the outputs.
+Break it down to the pieces, how to get from inputs to output, ignore the edge cases for now.
+Come up with written simple, then increasing complex examples... on paper!
+Work through them manually... the single input base case... the two input simple case... in different order... now three.
+Draw a flowchart diagram.
+Not till you build up a model solution to where you have an idea how to solve it on paper.
+
+Now start coding.

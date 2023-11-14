@@ -51,6 +51,7 @@ The test cases follow a predictable methodology :
    * O(n) the solution has no nested loops and all happens in a single pass
    * O(n+m) the solution has no nested loops, and passes over n and m only once
    * O(n+n) the solution has no nested loops, but you can pass over the sequence twice
+   * O(n*log(n)) the solution has a loop through n and a nested loop which does not always visit every possible n
    * O(n*n) the solution has a loop through n nested inside a loop through n
 * Codility is still running python 3.6.5 (2018) but there were issues with installing that on a 2022 version of linux, 
   so my updated tests were run on Python 3.7.13.
@@ -70,12 +71,11 @@ The test cases follow a predictable methodology :
 
 How to do this:
 
-Read the puzzle over and over.
-Focus on the inputs and the outputs.
-Break it down to the pieces, how to get from inputs to output, ignore the edge cases for now.
-Come up with written simple, then increasing complex examples... on paper!
-Work through them manually... the single input base case... the two input simple case... in different order... now three.
-Draw a flowchart diagram.
-Not till you build up a model solution to where you have an idea how to solve it on paper.
-
-Now start coding.
+* Read the puzzle over and over; soak in all the reading material.
+* Focus on the inputs and the outputs
+* Break it down to the pieces, how to get from inputs to output, ignore the edge cases for now
+* Think through all the tactics you know (stacks, prefix sums, sorts, slices) and see if they can help
+* Work through the basis examples manually... the single input base case... the two input simple case... in a different order... now three
+* Draw a flowchart diagram.
+* Build up a model solution, on paper, to where you have an idea how to solve it
+* Now try coding it

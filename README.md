@@ -69,13 +69,34 @@ The test cases follow a predictable methodology :
       * Whilst not explicitly stated, the answer is specified but implicitly–so be prepared for some uncertainty with
       some outputs; don't let it undermine your time and confidence in the moment.
 
-How to do this:
+## How to approach coding challenges
 
-* Read the puzzle over and over; soak in all the reading material.
-* Focus on the inputs and the outputs
-* Break it down to the pieces, how to get from inputs to output, ignore the edge cases for now
+* Read the puzzle over and over; soak up all the reading material
+* Focus on the inputs and the outputs of the routine
+* Ignore the edge cases (to start)
+* Work through the most basic examples on paper before you code:
+  * the single input base case... 
+  * the two input simple case... 
+  * in a different order... 
+  * now three... etc.
+* Break it down to the pieces 
 * Think through all the tactics you know (stacks, prefix sums, sorts, slices) and see if they can help
-* Work through the basis examples manually... the single input base case... the two input simple case... in a different order... now three
-* Draw a flowchart diagram.
 * Build up a model solution, on paper, to where you have an idea how to solve it
-* Now try coding it
+* Draw a flowchart diagram
+* Now, code and test the most basic example: one/most simple/minimal input case
+* Then, gradually less simple examples: if you get confused, go back to the paper
+* Finally, work in the edge cases
+
+
+## Tactics & Tricks
+
+Prime and Factors of numbers
+: Find factors of numbers, and primes.
+
+* If you have the product, you only need find one factor to determine the other.
+* You only need to search 1..sqrt() of possible numbers to find one factor.
+
+Euclidean Algorithm
+: The greatest common divisor of two positive integers
+
+* A recursive algorithm to quickly find the greatest common denominator.

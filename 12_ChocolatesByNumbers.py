@@ -37,26 +37,26 @@ and eat all the chocolates in the order of 0,1,2,3... etc.
 
 Similarly for 49. We can eat all the chocolates by 0, 49, 48, 47,... etc.
 The greatest common divisor (GCD) between 50 and 51 is 1! And the GCD between 50 and 49 is also 1.
-50 chocs divided by 1 is 50! So anytime there is no common denominator we can eat all 50 chocolates.
+50 chocs divided by 1 is 50! So anytime there is no common denominator (other than 1) we can eat all 50 chocolates.
 Interesting.
 
 What about the even numbers on either side of 50? Like 2 and 52? What are the GCDs for 2 and 48?
-The GCD for both is 2.  So we can only each every second chocolate, by either going forward or reverse and eating
-every second chocolate.
+The GCD for both is 2.  So we can only eat every second chocolate, by either going forward or 'reverse' (loop around)
+and eating every second chocolate.
 
 The same happens for 53 and 54. The GCD is 1 and 2 respectively, and we can eat all, or half, the available chocolates,
 before hitting upon a number, a *modulus*, that we have seen already.
 
-So 5 and 55? How many chocolates can we eat?  We don't need to think about it, must will know inuitively that
+So 5 and 55? How many chocolates can we eat?  We don't need to think about it, many will know inuitively that
 the answer for 5 is 50/5=10.  What about 55? Well its the same, but we just went around the circle to get there.
-So it's about that modulus: the remainder after completing the circle.  55 mod 50 is 5, so we don't need to work
-out the answer to 55 because we know it will be the same as 5.
+So, is it about that modulus? The remainder after completing the circle?
+55 mod 50 is 5: we don't need to work out the answer to 55 because we know it will be the same as 5.
 
 Now we're getting closer to Euclides.
 
 Euclides is credited as the first person to appreciate that the GCD does not change when you use multiples of the
-same numbers. The GCD for (50,5) and (50,55) is the same as the GCD of (50,95) and (50, 105). So we can substitute
-smaller ones for larger ones without changing the equation.
+same numbers. The GCDs for (50,5) and (50,55) are the same as the GCDs of (50,95) and (50, 105): we can substitute
+smaller numbers for larger ones without changing the result.
 
 How does that help us with the chocolates?
 By removing the complexity of going around and around the circle multiple times.
@@ -66,16 +66,17 @@ division: 50 divided by the GCD of 50 and M.  The GCD of (50,5) or (50,55) or (5
 We get to each 10 chocolates no matter how many times we have to go around the circle, because they all reduce to the
 same common divisor.
 
-Thus the answer is: N // gcd(N,M)
+So the answer is to the puzzle is: N // gcd(N,M)
 
-But how is the GCD determined?
+But what is the answer to the GCD?
 
-The Euclides algorithm repeatedly reduces either of the numbers until we arrive at a situation where one of them can divide
-the other evenly.  For primes that other will 1.
-The 'reduction' is the difference between the two numbers. We reduce one of the numbers by the difference between them.
-And repeat. When one of the numbers reaches zero, the GCD must be the other.
+The Euclides algorithm for GCD repeatedly reduces either of the numbers until we arrive at a situation whereby one of
+them can divide the other evenly.  For primes that other number is 1.
 
-Not so QED.
+The 'reduction' I mentioned is the difference between the two numbers: we reduce the larger of the numbers by the difference between them.
+Then repeat. When one of the numbers reaches zero, the GCD of the two must be the other, non-zero, number.
+
+QED?  It is so non-intuitive that we're still talking about Euclides 2300 years after he wrote it down.
 
 https://app.codility.com/demo/results/trainingC5DX6M-P79/
 """

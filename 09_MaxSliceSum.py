@@ -73,12 +73,12 @@ def solution(A):
     O(N) - 100%
     https://app.codility.com/demo/results/training4V9GS5-FV2/
 
-    I confess I'm a bit puzzled how this covers all possibilities but, apparently:
+    This covers all possibilities in a recursive way:
     as we progress down the line, there are only 3 possible candidates for the
     maximum:
      a) this number alone, or
-     b) this number alone plus the sum of everything up to this point, or
-     c) the current best slice.
+     b) the max we've seen so far plus this number, or
+     c) the best slice so far (which is the better of (b), or what we have)
     """
     max_slice = -2147483648
     max_ending = 0
@@ -96,6 +96,8 @@ class TestExercise(unittest.TestCase):
         self.assertEqual(-2, solution([-2, -2]))
         self.assertEqual(1, solution([-2, 1]))
         self.assertEqual(5, solution([3, 2, -6, 4, 0]))
+        self.assertEqual(4, solution([4]))
+
 
 
 if __name__ == "__main__":

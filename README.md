@@ -53,9 +53,13 @@ The test cases follow a predictable methodology :
    * O(n+n) the solution has no nested loops, but you can pass over the sequence twice
    * O(n*log(n)) the solution has a loop through n and a nested loop which does not always visit every possible n
    * O(n*n) the solution has a loop through n nested inside a loop through n
-* Codility is still running python 3.6.5 (2018) but there were issues with installing that on a 2022 version of linux, 
-  so my updated tests were run on Python 3.7.13.
-* This complaint appears to be fixed by Codility rewriting the descriptions...
+* Codility does update the python version occasionally, and I always mirror the current
+  version.  So puzzles solved in 2018 used Python 3.7.13. In 2023 we are on 3.8.10 or 3.10.x.
+  It's not really relevant, because all the puzzles are intended for solving in a lot of
+  different languages and tend to only use integers and simple for loops; none of them
+  rely on specific language features, although sometimes you may encounter quirks
+  which impact the performance.
+* This next complaint appears to be fixed now, as Codility rewrote the description:
 
   If there seems to be a lack of clarity in a puzzle regarding the correct response to error conditions: 
   look, read, and look again because, after seeing the solution, that apparent lack will become a (debatably) 
@@ -83,6 +87,8 @@ The test cases follow a predictable methodology :
 * Think through all the tactics you know (stacks, prefix sums, sorts, slices) and see if they can help
 * Build up a model solution, on paper, to where you have an idea how to solve it
 * Draw a flowchart diagram
+* Tough call to decide whether to go for the brute force solution first then optimize, or hope to save-not waste-time, 
+  by going directly for the optimal solution.
 * Now, code and test the most basic example: one/most simple/minimal input case
 * Then, gradually less simple examples: if you get confused, go back to the paper
 * Finally, work in the edge cases
